@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAG App: Conversation Export — Conversation Export</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body { padding: 2rem; }
+  .turn { margin-bottom: 2rem; }
+  .meta small { color: #6c757d; }
+  .question-badge { font-size: 0.8rem; }
+  .answer-card pre code { white-space: pre-wrap; word-break: break-word; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="mb-4">
+    <h1 class="display-6">RAG App: Conversation Export</h1>
+    <div class="meta">
+      <small>Generated: 2025-08-16 10:08:20</small><br>
+      <small>Model: gpt-oss:20b</small><br>
+      <small>Ollama: /usr/local/bin/ollama</small>
+    </div>
+    <hr />
+  </header>
+
+<section class="turn">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="h5 mb-0">Turn 1</h2>
+    <span class="badge bg-secondary question-badge">2025-08-16 10:08:20</span>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header fw-semibold">Question</div>
+    <div class="card-body">
+      <div class="mb-2"><span class="badge bg-info">Perspective: scientist</span>
+      <span class="badge bg-primary ms-2">Audience: researchers</span></div>
+      <div class="mt-2"><p>list all of the parameters included for the simulation and explain what each of them mean and what the range of expected values might be.</p></div>
+    </div>
+  </div>
+
+  <div class="card answer-card">
+    <div class="card-header fw-semibold">Answer</div>
+    <div class="card-body">
+      <div class="mb-2"><span class="badge bg-dark">Retrieved Chunks: 4</span></div>
+      <p>Thinking...
+We need to list all parameters included for the simulation. These are in the code: from scenario parameters and step durations, vector availability, capacities, etc. We must explain each, meaning and expected range. Provide clarity. Should mention step params: Apheresis, Ship-In, Activation, Transduction, Expansion, Fill/Finish, QC, Release, Ship-Out, Infusion. Also vector delay probability, mean, sd. Capacities: apheresis capacity (# chairs), mfg rigs (# manufacturing rigs), qc stations, clinic slots per day. Interarrival days (mean interarrival time). n_patients. target lead time days. seed. QC method selection with custom days. Also vector availability probability etc. Also for simulation horizon? Live mode includes limited horizon. For range, we provide typical ranges in clinical manufacturing. Use research context. Should not quote text. Provide definitions.</p>
+<p>Let's enumerate:</p>
+<ul>
+<li>n_patients: integer, typical 5-200 (study size). </li>
+<li>interarrival_days: mean interarrival between patient enrollments, 0.05-5 days.</li>
+<li>apheresis_capacity: 1-20 chairs.</li>
+<li>mfg_rigs: 1-20 manufacturing rigs.</li>
+<li>qc_stations: 1-20 QC stations.</li>
+<li>clinic_slots_per_day: 1-40 infusion slots per day.</li>
+</ul>
+<p>StepParams:
+- Apheresis mean 0.05-5 days; sd 0-2 days.
+- Ship-In mean 0.05-5 days; sd 0-2.
+- Activation mean 0.05-10 days; sd 0-5.
+- Transduction mean 0.05-10 days; sd 0-5.
+- Expansion mean 0.1-30 days; sd 0-10.
+- Fill/Finish mean 0.01-5 days; sd 0-2.
+- QC days (selected 14 or 3 or custom 0.5-20).
+- Release mean 0.01-5 days; sd 0-2.
+- Ship-Out mean 0.01-5 days; sd 0-2.
+- Infusion mean 0.01-2 days; sd 0-1.</p>
+<p>Vector availability:
+- vector_delay_prob 0-1 probability of delay.
+- vector_delay_mean 0-20 days.
+- vector_delay_sd 0-10 days.</p>
+<p>Other:
+- target_lead_time_days: 7-180 days.
+- seed: 0-10000.</p>
+<p>Also live mode parameters but those are for UI only. Provide ranges.</p>
+<p>Also QC duration maybe used as mean for QC step. Provide explanation.</p>
+<p>Let's craft answer with bullet list, each param description and range. Use researcher tone. Provide units. Also mention meaning. Also explain why range.</p>
+<p>Let's write.
+...done thinking.</p>
+<p><strong>Simulation Input Parameters – Meaning and Typical Ranges</strong></p>
+<table class="table table-sm table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>Category</th>
+<th>Parameter</th>
+<th>Description</th>
+<th>Expected Range (typical clinical‑manufacturing context)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scenario‑level</strong></td>
+<td><code>n_patients</code></td>
+<td>Total number of patients to be simulated.  In a modelling study this is often chosen to mimic a clinical trial or roll‑out cohort.</td>
+<td>5 – 200 (small exploratory runs) to 10 000+ for high‑volume commercial roll‑outs</td>
+</tr>
+<tr>
+<td></td>
+<td><code>interarrival_days</code></td>
+<td>Mean time between the initiation of two consecutive patient enrollments.  Models the pace of patient arrival into the manufacturing pipeline.</td>
+<td>0.05 – 5 days (rapid enrollment programs → ~0.1 d, slow programs → ~3 days)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>target_lead_time_days</code></td>
+<td>The maximum lead‑time that is considered acceptable for a patient (from apheresis to infusion).  Used to compute the “on‑time” KPI.</td>
+<td>7 – 180 days (short‑cycle therapies → ~14 d, longer‑cycle or multi‑step products → &gt; 90 d)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>seed</code></td>
+<td>Random seed for reproducibility of the stochastic process.</td>
+<td>0 – 10 000 (any integer; a default of 42 is common)</td>
+</tr>
+<tr>
+<td><strong>Capacity / Resource constraints</strong></td>
+<td><code>apheresis_capacity</code></td>
+<td>Number of apheresis chairs available per day.  Determines how many patients can be started each day.</td>
+<td>1 – 20 chairs (small centre → 2–4, large centre → 10–20)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>mfg_rigs</code></td>
+<td>Number of manufacturing rigs (bioreactors, cell‑culture vessels, etc.) that can run in parallel.</td>
+<td>1 – 20 rigs (typical small‑scale → 2–4, large‑scale → 8–16)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>qc_stations</code></td>
+<td>Number of independent QC stations that can process samples concurrently.</td>
+<td>1 – 20 stations (depends on product complexity)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>clinic_slots_per_day</code></td>
+<td>Number of infusion slots available each clinic day.  Limits how many patients can receive the final product.</td>
+<td>1 – 40 slots (small centre → 4–8, large centre → 20–40)</td>
+</tr>
+<tr>
+<td><strong>Process‑step durations (mean ± SD, days)</strong></td>
+<td><code>Apheresis</code></td>
+<td>Time to collect the patient’s autologous cells.</td>
+<td>mean: 0.05 – 5 d; sd: 0 – 2 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Ship‑In</code></td>
+<td>Transport time from patient to the central manufacturing site (or vice‑versa).</td>
+<td>mean: 0.05 – 5 d; sd: 0 – 2 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Activation</code></td>
+<td>Primary cell activation step (e.g., viral‑mediated transduction prep).</td>
+<td>mean: 0.05 – 10 d; sd: 0 – 5 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Transduction</code></td>
+<td>Actual viral or electroporation transduction of the cells.</td>
+<td>mean: 0.05 – 10 d; sd: 0 – 5 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Expansion</code></td>
+<td>In‑vitro cell expansion to therapeutic dose.</td>
+<td>mean: 0.1 – 30 d; sd: 0 – 10 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Fill/Finish</code></td>
+<td>Formulation, fill‑and‑finish, cGMP packaging of the final product.</td>
+<td>mean: 0.01 – 5 d; sd: 0 – 2 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>QC</code></td>
+<td>Quality‑control testing (sterility, potency, etc.).  Modeled as a fixed duration or a Gaussian with the selected QC method.</td>
+<td>mean: 3–14 d (Rapid vs. USP); custom: 0.5 – 20 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Release</code></td>
+<td>Release decision and documentation.</td>
+<td>mean: 0.01 – 5 d; sd: 0 – 2 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Ship‑Out</code></td>
+<td>Transport from manufacturing to the infusion clinic.</td>
+<td>mean: 0.01 – 5 d; sd: 0 – 2 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>Infusion</code></td>
+<td>Actual infusion procedure at the clinic.</td>
+<td>mean: 0.01 – 2 d; sd: 0 – 1 d</td>
+</tr>
+<tr>
+<td><strong>Vector‑availability / delay model</strong></td>
+<td><code>vector_delay_prob</code></td>
+<td>Probability that a patient’s vector (e.g., viral stock) is delayed and must wait before transduction.</td>
+<td>0.0 – 1.0 (0 % delay → immediate; 100 % delay → all patients wait)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>vector_delay_mean</code></td>
+<td>Mean length of a vector delay when it occurs.</td>
+<td>0 – 20 d</td>
+</tr>
+<tr>
+<td></td>
+<td><code>vector_delay_sd</code></td>
+<td>Standard deviation of that delay.</td>
+<td>0 – 10 d</td>
+</tr>
+<tr>
+<td><strong>QC Method Selection</strong></td>
+<td><code>qc_mode</code></td>
+<td>Choice of QC workflow.  Determines the mean QC duration used in the simulation.</td>
+<td>“USP &lt;71&gt; Sterility (14 d)”, “Rapid Method (3 d)”, or “Custom”</td>
+</tr>
+<tr>
+<td></td>
+<td><code>custom_qc</code></td>
+<td>If “Custom” is chosen, the user supplies a QC duration.</td>
+<td>0.5 – 20 d</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="how-the-parameters-influence-the-simulation">How the Parameters Influence the Simulation</h3>
+<ul>
+<li><strong>Patient flow &amp; scheduling</strong> – <code>n_patients</code>, <code>interarrival_days</code>, and the resource capacities dictate how many patients can be processed in parallel and how quickly they advance through the pipeline.</li>
+<li><strong>Lead‑time metrics</strong> – The step‑mean and SD values determine the distribution of times each patient spends in every sub‑step; combined with the resource capacities, they produce the overall lead‑time distribution from apheresis to infusion.  The <code>target_lead_time_days</code> is used to compute the percentage of patients delivered on‑time.</li>
+<li><strong>Vector availability</strong> – By adjusting <code>vector_delay_prob</code> you can model situations where a batch of viral vectors is out of stock, causing a stochastic postponement before transduction can begin.  The mean and SD control the length of those postponements.</li>
+<li><strong>QC variation</strong> – Choosing between a 3‑day rapid method and a 14‑day sterility assay, or supplying a custom value, directly shifts the QC sub‑step duration, which is often a critical bottleneck in autologous therapies.</li>
+<li><strong>Resource constraints</strong> – Reducing the number of apheresis chairs or QC stations typically raises the bottleneck pressure, leading to longer lead‑times and potentially fewer patients treated within a fixed horizon.</li>
+</ul>
+<p>These ranges are deliberately broad to allow the model to be applied to both early‑stage, high‑flexibility pilot studies (short lead‑times, low patient numbers) and later‑stage commercial roll‑outs (longer lead‑times, larger cohorts).  Researchers can tailor the parameters to the specific cell‑gene therapy product, manufacturing architecture, or health‑system context they are studying.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="mt-5 pt-3 border-top">
+  <p class="text-muted small mb-0">Exported from Streamlit RAG app.</p>
+</footer>
+</div>
+</body>
+</html>
